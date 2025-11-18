@@ -1,0 +1,23 @@
+@echo off
+echo Fixing PostgreSQL user permissions...
+echo.
+echo Dropping existing user if exists...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d postgres -c "DROP USER IF EXISTS anyika;"
+echo.
+echo Creating user with proper permissions...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d postgres -c "CREATE USER anyika WITH PASSWORD 'anyika' LOGIN CREATEDB SUPERUSER;"
+echo.
+echo Dropping existing database if exists...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d postgres -c "DROP DATABASE IF EXISTS hr_employee_management;"
+echo.
+echo Creating database...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d postgres -c "CREATE DATABASE hr_employee_management OWNER anyika;"
+echo.
+echo Granting all privileges...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U postgres -d postgres -c "GRANT ALL PRIVILEGES ON DATABASE hr_employee_management TO anyika;"
+echo.
+echo Testing connection...
+"C:\Program Files\PostgreSQL\17\bin\psql.exe" -U anyika -d hr_employee_management -c "SELECT current_user, current_database();"
+echo.
+echo Setup complete!
+pause
