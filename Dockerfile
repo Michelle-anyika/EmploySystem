@@ -1,5 +1,5 @@
 # Multi-stage build for production
-FROM maven:3.9.4-openjdk-21-slim AS build
+FROM maven:3.9.5-eclipse-temurin-21 AS build
 
 # Set working directory
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Production stage
-FROM openjdk:21-jre-slim
+FROM eclipse-temurin:21-jre
 
 # Set working directory
 WORKDIR /app
