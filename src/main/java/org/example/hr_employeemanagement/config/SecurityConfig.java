@@ -44,7 +44,13 @@ public class SecurityConfig {
                     "/configuration/ui",
                     "/configuration/security"
                 ).permitAll()
-                .requestMatchers("/api/employees/**").authenticated()
+                // Employee Management - Role-based access
+                .requestMatchers("GET", "/api/employees/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("POST", "/api/employees").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("PUT", "/api/employees/**").hasRole("ADMIN")
+                .requestMatchers("DELETE", "/api/employees/**").hasRole("ADMIN")
+                // Admin-only user management endpoints
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
         );
 
