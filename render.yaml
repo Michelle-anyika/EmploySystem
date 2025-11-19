@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: hr-employee-management
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_URL
+        value: jdbc:postgresql://dpg-your-db-url/hr_employee_management
+      - key: DB_USERNAME
+        value: anyika
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: hr-postgres
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION
+        value: 86400000
+      - key: SUPER_ADMIN_USERNAME
+        value: superadmin
+      - key: SUPER_ADMIN_PASSWORD
+        value: admin123
+      - key: SUPER_ADMIN_EMAIL
+        value: admin@hrcompany.com
+
+databases:
+  - name: hr-postgres
+    databaseName: hr_employee_management
+    user: anyika

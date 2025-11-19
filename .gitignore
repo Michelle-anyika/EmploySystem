@@ -37,3 +37,9 @@ build/
 .env.local
 .env.production
 .env.test
+
+### Keep Docker and Render files ###
+!Dockerfile
+!docker-compose.yml
+!render.yaml
+!.dockerignore
