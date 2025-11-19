@@ -60,4 +60,6 @@ public class UserService {
         String token = jwtTokenUtil.generateToken(user.getUsername());
         return new JwtResponse(token);
     }
+
+
 }
