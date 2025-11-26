@@ -19,8 +19,8 @@ public class SwaggerConfig {
                         .description("Comprehensive API documentation for HR Employee Management System with JWT authentication")
                         .version("1.0")
                         .contact(new Contact()
-                                .name("HR Management Team")
-                                .email("support@hrmanagement.com")))
+                                .name("Anyika Michelle")
+                                .email("m.anyika@alustudent.com")))
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth",
                                 new SecurityScheme()
