@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
+  db:
+    image: postgres:16
     container_name: hr_postgres
     environment:
       POSTGRES_DB: hr_employee_management
@@ -13,20 +13,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - hr_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U anyika -d hr_employee_management"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   # Spring Boot Application
   app:
     build: .
     container_name: hr_app
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/hr_employee_management
+      DB_URL: jdbc:postgresql://db:5432/hr_employee_management
       DB_USERNAME: anyika
       DB_PASSWORD: anyika
       JWT_SECRET: mySecretKeyForJWTTokenGenerationThatShouldBeAtLeast256BitsLong
@@ -37,15 +30,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - hr_network
-    restart: unless-stopped
+      - db
 
 volumes:
   postgres_data:
-
-networks:
-  hr_network:
-    driver: bridge
